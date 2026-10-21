@@ -51,9 +51,13 @@ may do:
 | Shoot | Request scenes and start shoots, which use frames from your plan |
 | Publish | Approve frames onto your products, and take them back off |
 
-Web app stores see and disconnect every connected assistant under Settings,
-Connected assistants; disconnecting stops it at once. On a Shopify store,
-connected assistants stop working while the Shootika app is removed.
+You can see and disconnect every connected assistant, and disconnecting stops
+it at once:
+
+- **Web app stores:** Settings, Connected assistants.
+- **Shopify stores:** open
+  `https://admin.shopify.com/store/<your-store>/apps/shootika/app/connections`.
+  Removing the Shootika app also disconnects every assistant.
 
 ## How it treats your store
 
@@ -69,7 +73,7 @@ one skill written in plain text.
 
 - Your assistant connects only to `https://mcp.shootika.com`, over HTTPS, after
   you approve the connection. It authenticates with an OAuth token issued
-  when you approve, which stops working once the connection is disconnected.
+  when you approve, which stops working as soon as you disconnect.
 - Through that connection the assistant reads your Shootika account, products,
   scenes and shoots, and, with your permission, adds products, starts shoots
   and publishes frames. Product photos you add by URL are fetched by

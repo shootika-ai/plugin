@@ -1,6 +1,6 @@
 {
   "name": "shootika",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Shoot on-model product photos for your store from your AI assistant: find products without model photos, start shoots, review the frames and publish the ones you approve. Works with a Shopify store or any other online store.",
   "author": {
     "name": "Dimenso",
@@ -30,5 +30,60 @@
     "supportURL": "https://shootika.com/contact/",
     "privacyPolicyURL": "https://shootika.com/legal/privacy/",
     "termsOfServiceURL": "https://shootika.com/legal/terms/"
+  },
+  "extensions": {
+    "com.openai": {
+      "review": {
+        "test_cases": {
+          "positive": [
+            {
+              "description": "Check the plan and the frames left before doing anything that costs.",
+              "prompt": "How many Shootika frames does my store have left this month?",
+              "tools_triggered": "get_account",
+              "expected_behavior": "Calls get_account and states the store name, its plan, and the frames left this month. Starts no shoot."
+            },
+            {
+              "description": "Browse the catalog that shoots start from.",
+              "prompt": "List my newest products in Shootika and say which ones have photos I could shoot from.",
+              "tools_triggered": "list_products",
+              "expected_behavior": "Calls list_products and lists products with their titles, noting which have product photos. Changes nothing."
+            },
+            {
+              "description": "Add a product from a public image URL (web app store).",
+              "prompt": "Add a product called \"Sage knit sweater\" to Shootika with this photo: https://shootika.tryoncdn.com/website/source/flatlay.jpg",
+              "tools_triggered": "add_product",
+              "expected_behavior": "Calls add_product with the title and the image URL, then confirms the product was added and whether the photo was fetched."
+            },
+            {
+              "description": "Start a shoot only after the person agrees to spend a frame, then wait for it.",
+              "prompt": "Shoot my newest product on a model in a studio look.",
+              "tools_triggered": "get_account, list_products, get_product, list_scenes, start_shoot, get_shoot",
+              "expected_behavior": "Finds the product, its photo and a ready scene, says the shoot uses one frame and asks to go ahead. After a yes, calls start_shoot with a request_id, then get_shoot until the frame is ready, and shows the preview with its full-size link."
+            },
+            {
+              "description": "Publish a frame only with explicit consent.",
+              "prompt": "Show me my latest finished frame, and publish it if I say yes.",
+              "tools_triggered": "list_shoots, approve_frame",
+              "expected_behavior": "Calls list_shoots, shows the latest ready frame and asks whether to publish it. Calls approve_frame only after the person says yes, then confirms it was published."
+            }
+          ],
+          "negative": [
+            {
+              "description": "Editing prices is outside Shootika: it only adds and removes its own frames. The assistant should say so and change nothing.",
+              "prompt": "Change the price of my linen dress to 40 dollars."
+            },
+            {
+              "description": "Shootika has no customer or order data. The assistant should explain that and call no Shootika tool.",
+              "prompt": "Show me the email addresses of customers who bought my linen dress."
+            },
+            {
+              "description": "A general writing task with no product photography in it. The assistant should answer without calling any Shootika tool.",
+              "prompt": "Write a short Instagram caption for our autumn sale."
+            }
+          ]
+        },
+        "commerce": false
+      }
+    }
   }
 }

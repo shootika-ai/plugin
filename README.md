@@ -53,7 +53,7 @@ may do:
 
 Web app stores see and disconnect every connected assistant under Settings,
 Connected assistants; disconnecting stops it at once. On a Shopify store,
-removing the Shootika app disconnects every assistant.
+connected assistants stop working while the Shootika app is removed.
 
 ## How it treats your store
 
@@ -68,8 +68,8 @@ The plugin runs no code on your computer. It adds one remote MCP server and
 one skill written in plain text.
 
 - Your assistant connects only to `https://mcp.shootika.com`, over HTTPS, after
-  you approve the connection. It authenticates with an OAuth token that you
-  can revoke.
+  you approve the connection. It authenticates with an OAuth token issued
+  when you approve, which stops working once the connection is disconnected.
 - Through that connection the assistant reads your Shootika account, products,
   scenes and shoots, and, with your permission, adds products, starts shoots
   and publishes frames. Product photos you add by URL are fetched by

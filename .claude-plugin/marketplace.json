@@ -1,0 +1,17 @@
+{
+  "name": "shootika",
+  "owner": {
+    "name": "Dimenso",
+    "email": "support@shootika.com"
+  },
+  "metadata": {
+    "description": "The Shootika plugin: on-model product photos from your AI assistant."
+  },
+  "plugins": [
+    {
+      "name": "shootika",
+      "source": "./",
+      "description": "Shoot on-model product photos for your store from your AI assistant: find products without model photos, start shoots, review the frames and publish the ones you approve. Works with a Shopify store or any other online store."
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "name": "shootika",
+  "version": "0.1.0",
+  "description": "Shoot on-model product photos for your store from your AI assistant: find products without model photos, start shoots, review the frames and publish the ones you approve. Works with a Shopify store or any other online store.",
+  "author": {
+    "name": "Dimenso",
+    "email": "support@shootika.com",
+    "url": "https://dimenso.io"
+  },
+  "displayName": "Shootika",
+  "homepage": "https://shootika.com",
+  "repository": "https://github.com/shootika-ai/plugin",
+  "license": "MIT",
+  "keywords": [
+    "shootika",
+    "product-photography",
+    "on-model",
+    "ecommerce",
+    "shopify",
+    "mcp"
+  ],
+  "icon": "./assets/icon.png",
+  "supportUrl": "https://shootika.com/contact/",
+  "privacyPolicyUrl": "https://shootika.com/legal/privacy/",
+  "termsOfServiceUrl": "https://shootika.com/legal/terms/"
+}

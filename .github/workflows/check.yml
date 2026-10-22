@@ -17,8 +17,12 @@ jobs:
       - name: Install Claude Code
         run: npm install -g @anthropic-ai/claude-code
 
+      # Not --strict: the runner's build warns on the directory-only manifest fields (icon and the
+      # four *Url fields) that Anthropic's directory reads and Claude Code ignores. Errors still fail.
       - name: Validate the plugin as Claude Code does
-        run: claude plugin validate --strict .
+        run: |
+          claude --version
+          claude plugin validate .
 
       - uses: actions/setup-python@v5
         with:

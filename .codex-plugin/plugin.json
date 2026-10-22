@@ -1,6 +1,6 @@
 {
   "name": "shootika",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Shoot on-model product photos for your store from your AI assistant: find products without model photos, start shoots, review the frames and publish the ones you approve. Works with a Shopify store or any other online store.",
   "author": {
     "name": "Dimenso",
@@ -17,7 +17,7 @@
     "longDescription": "Shoot on-model product photos for your store from your AI assistant: find products without model photos, start shoots, review the frames and publish the ones you approve. Works with a Shopify store or any other online store.",
     "developerName": "Dimenso",
     "category": "Productivity",
-    "capabilities": [],
+    "capabilities": ["Read", "Write"],
     "composerIcon": "./assets/icon.png",
     "logo": "./assets/icon.png",
     "brandColor": "#2242E8",
@@ -33,6 +33,10 @@
   },
   "extensions": {
     "com.openai": {
+      "onboardingSkill": "./skills/connect/SKILL.md",
+      "publication": {
+        "release_notes": "Four skills: shoot products, review frames, cast models, connect. README rewritten as the listing."
+      },
       "review": {
         "test_cases": {
           "positive": [

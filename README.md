@@ -1,48 +1,46 @@
 # Shootika for AI assistants
 
-[Shootika](https://shootika.com) turns the flat-lays a store already has into
-on-model product photos, for a Shopify store or any other online store. This
-plugin connects Shootika to your AI assistant, so you can ask it to shoot your
-products, show you the results and publish the ones you like.
-
-It contains no server code. It points your assistant at the hosted Shootika
-MCP server, `https://mcp.shootika.com`, and adds one skill, `shoot-products`,
-that walks the assistant through a shoot from start to publish.
+[Shootika](https://shootika.com) turns the flat-lay photos a clothing store
+already has into on-model product photos, for a Shopify store or any other
+online store. This plugin connects Shootika to your AI assistant, so you can
+ask it to shoot your products, show you the results and publish the ones you
+like, in the same conversation where you do the rest of your work.
 
 ## What you can ask
 
 - "Which of my products have no model photos yet?"
-- "Shoot the new linen dresses on a model in a studio style."
+- "Shoot my newest product on a model and show me the frames."
 - "Show me the frames from today and publish the second one."
 - "How many frames do I have left this month?"
 
-## Install
+The plugin adds four skills that walk the assistant through those jobs:
+`shoot-products` (find products, pick a photo and a scene, start shoots and
+wait for the frames), `review-frames` (show frames, publish or take back the
+ones you choose), `cast-models` (pick the model, pose and style, or set up one
+house model for the whole catalog) and `connect` (what the connection asks for
+and how to change it).
 
-**Claude Code**
+## How it treats your store
 
-```
-/plugin install shootika --marketplace shootika-ai/plugin
-```
-
-**Codex**
-
-```
-codex plugin marketplace add shootika-ai/plugin
-codex plugin add shootika@shootika
-```
-
-**Claude.ai, ChatGPT and other assistants** that take a remote MCP server by
-URL: add a custom connector with the URL `https://mcp.shootika.com`.
+- **Every shoot uses one frame from your plan.** The assistant checks how many
+  you have left and asks before starting shoots you did not ask for.
+- **Nothing is published until you say so.** The assistant shows you each
+  frame and waits for a clear yes. On a Shopify store, an approved frame goes
+  on the live product page, where shoppers see it. On a web app store it is
+  saved to the product in Shootika.
+- **It only adds and removes its own frames.** It cannot change prices or
+  other product details, and Shootika has no customer or order data.
 
 ## Connecting
 
-You need a Shootika account: the Shopify app, or the web app at
+You need a Shootika account: the
+[Shopify app](https://apps.shopify.com/shootika), or the web app at
 [panel.shootika.com](https://panel.shootika.com/signup).
 
 The first time the assistant uses Shootika, it opens a Shootika page where you
-approve the connection. Shopify stores approve inside their Shopify admin;
-web app stores approve in the Shootika web app. You choose what the assistant
-may do:
+approve the connection. Shopify stores approve inside their Shopify admin; web
+app stores approve in the Shootika web app. You choose what the assistant may
+do:
 
 | Permission | Lets the assistant |
 |---|---|
@@ -59,31 +57,52 @@ it at once:
   `https://admin.shopify.com/store/<your-store>/apps/shootika/app/connections`.
   Removing the Shootika app also disconnects every assistant.
 
-## How it treats your store
+The full guides are at [docs.shootika.com/ai-assistants](https://docs.shootika.com/ai-assistants/).
 
-- Every shoot uses one frame from your plan. The assistant checks how many you
-  have left and asks before starting shoots you did not ask for.
-- Nothing is published until you say so. On a Shopify store, an approved frame
-  goes on the live product page.
+## Install
+
+**Claude.ai and ChatGPT:** find Shootika in your assistant's directory, or add
+a custom connector with the URL `https://mcp.shootika.com`.
+
+**Claude Code**
+
+```
+/plugin install shootika --marketplace shootika-ai/plugin
+```
+
+**Codex**
+
+```
+codex plugin marketplace add shootika-ai/plugin
+codex plugin add shootika@shootika
+```
+
+**Cursor and other assistants** that take a remote MCP server by URL: add
+`https://mcp.shootika.com`.
 
 ## What this plugin sends and fetches
 
-The plugin runs no code on your computer. It adds one remote MCP server and
-one skill written in plain text.
+The plugin runs no code on your computer. It is one remote MCP server
+reference and four skills written in plain text.
 
-- Your assistant connects only to `https://mcp.shootika.com`, over HTTPS, after
-  you approve the connection. It authenticates with an OAuth token issued
-  when you approve, which stops working as soon as you disconnect.
-- Through that connection the assistant reads your Shootika account, products,
-  scenes and shoots, and, with your permission, adds products, starts shoots
-  and publishes frames. Product photos you add by URL are fetched by
-  Shootika's servers, not by the plugin.
+- Your assistant connects only to `https://mcp.shootika.com`, over HTTPS,
+  after you approve the connection. It authenticates with an OAuth token
+  issued when you approve, which stops working as soon as you disconnect.
+- With the Read permission, the assistant reads your Shootika account, your
+  products and their photos, the model, style and scene library, and your
+  shoots and frames. With Catalog it adds products and photos; with Shoot it
+  requests scenes and starts shoots; with Publish it approves frames onto your
+  products and takes them off.
+- Product photos you add by URL are fetched by Shootika's servers, not by the
+  plugin or your assistant.
 - Frame previews come back to your assistant as small images, with a link to
-  the full-size image.
+  the full-size image on Shootika's servers.
+- The plugin stores nothing itself and sends nothing to any other service.
 
 ## Privacy
 
 Shootika's privacy policy: <https://shootika.com/legal/privacy/>.
+Terms of service: <https://shootika.com/legal/terms/>.
 Support: support@shootika.com.
 
 Shootika is built by [Dimenso](https://dimenso.io), DIMENSO L.L.C-FZ.

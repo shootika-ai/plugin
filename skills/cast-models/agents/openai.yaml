@@ -1,0 +1,4 @@
+interface:
+  display_name: "Cast models"
+  short_description: "Pick the model, pose and style"
+  default_prompt: "Use $cast-models to show me three looks for a house model for my catalog."

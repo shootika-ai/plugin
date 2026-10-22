@@ -38,7 +38,7 @@ def codex_manifest(**over):
             'displayName': 'Shootika', 'shortDescription': 'On-model product photos',
             'longDescription': 'Shoot on-model product photos for your store.',
             'developerName': 'Dimenso', 'category': 'Productivity', 'capabilities': ['Read', 'Write'],
-            'composerIcon': './assets/icon.png', 'logo': './assets/icon.png',
+            'composerIcon': './assets/sample.png', 'logo': './assets/sample.png',
             'defaultPrompt': list(PROMPTS),
             'websiteURL': 'https://shootika.com', 'supportURL': 'https://shootika.com/contact/',
             'privacyPolicyURL': 'https://shootika.com/legal/privacy/',
@@ -70,7 +70,7 @@ def make_plugin(root: Path, *, claude=None, codex=None, readme_text=None, skill=
     (root / 'README.md').write_text(readme() if readme_text is None else readme_text)
     (root / 'LICENSE').write_text('MIT\n')
     (root / 'assets').mkdir()
-    (root / 'assets' / 'icon.png').write_bytes(b'\x89PNG' + b'\0' * 300 * 1024)
+    (root / 'assets' / 'sample.png').write_bytes(b'\x89PNG' + b'\0' * 300 * 1024)
     (root / 'skills' / 'shoot-products').mkdir(parents=True)
     (root / 'skills' / 'shoot-products' / 'SKILL.md').write_text(skill)
 
@@ -203,6 +203,12 @@ class CheckTests(unittest.TestCase):
         with self.subTest('manifest'):
             self.assert_reported(self.problems(claude=claude_manifest(description='a — b')),
                                  'plugin.json', 'em-dash')
+
+    def test_a_bundled_image_path_in_backticks_is_reported(self):
+        # The directory holds a plugin for review when a bundled image's path is written in backticks
+        # or a code block; Markdown image syntax is the allowed form.
+        root = self.plugin(readme_text=readme(prose=PROSE + ' the icon is `assets/sample.png` here'))
+        self.assert_reported(check.run(root), 'README.md', 'assets/sample.png', 'backticks')
 
     def test_stray_system_file_is_reported(self):
         root = self.plugin()

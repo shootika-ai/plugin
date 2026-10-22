@@ -26,8 +26,9 @@ frames are ready"; `review-frames` takes over from there.
   while more exist. Each product carries its id, title, garment category and
   photos.
 - A product has no model photos when `list_shoots` filtered by its
-  `product_id` returns nothing. For a large catalog, ask the person which
-  products they mean rather than paging through everything.
+  `product_id` and `status` ready returns nothing; failed or canceled frames
+  are not photos. For a large catalog, ask the person which products they
+  mean rather than paging through everything.
 - Web app stores can add a missing product with `add_product`, or a photo with
   `add_product_image`, from public image URLs. Shopify stores cannot: their
   products come from Shopify. `references/store-types.md` has the two cases.
@@ -45,11 +46,12 @@ frames are ready"; `review-frames` takes over from there.
 
 ## Start and wait
 
-- `start_shoot` once per product and scene, each call with its own
-  `request_id`, for example the product id and the scene id joined. A repeated
-  call with the same `request_id` within 24 hours returns the first result
-  instead of starting and charging a second shoot, so a retry after a network
-  error is safe.
+- `start_shoot` once per product and scene, each call with a fresh
+  `request_id`, for example the product id, the scene id and the time joined.
+  Reuse an id only to retry that same call after a network error: within 24
+  hours it returns the first result instead of starting and charging a second
+  shoot. A second shoot the person asks for needs a new id; the same id with
+  different arguments is refused.
 - `start_shoot` returns at once with the frame queued. `get_shoot` waits a few
   seconds and returns the frame; call it again with the same id while the
   status is `queued` or `processing`. Do not narrate each poll.

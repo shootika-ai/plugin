@@ -211,7 +211,22 @@ def check_files(root: Path) -> list[str]:
             problems.append(f'{rel}: {path.stat().st_size} bytes, non-image files must stay under 256 KiB')
         if path.suffix.lower() in TEXT_SUFFIXES and EM_DASH in _text_content(path):
             problems.append(f'{rel}: contains an em-dash')
+        if path.suffix.lower() == '.md':
+            for image in _backticked_images(path.read_text(encoding='utf-8', errors='replace')):
+                problems.append(f'{rel}: bundled image {image} written in backticks or a code block; '
+                                f'the directory holds that for a reviewer, use Markdown image syntax or prose')
     return problems
+
+
+_IMAGE_PATH = r'(?:\./)?assets/[A-Za-z0-9_.\-/]+\.(?:png|jpe?g|gif|webp|svg)'
+
+
+def _backticked_images(markdown: str) -> list[str]:
+    """Bundled image paths inside inline code or fenced code blocks."""
+    found = []
+    for block in re.findall(r'```.*?```|`[^`\n]*`', markdown, flags=re.S):
+        found += re.findall(_IMAGE_PATH, block)
+    return sorted(set(found))
 
 
 def run(root: Path) -> list[str]:

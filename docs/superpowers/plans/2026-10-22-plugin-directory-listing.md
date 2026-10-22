@@ -50,7 +50,7 @@ Contents: `0.2.0` and a newline.
 
 - [ ] **Step 2: Write the failing tests**
 
-`scripts/test_check.py` builds a minimal passing plugin in a `tempfile.TemporaryDirectory()` through a helper `make_plugin(root, **overrides)` that writes `VERSION`, both manifests, `.mcp.json`, `README.md` (50 prose words plus a code block, "What you can ask" with the four lines from Task 4), `LICENSE`, `assets/icon.png` (any bytes; images are not size-checked), and one skill `skills/shoot-products/SKILL.md` with valid front matter. Tests, each mutating one thing:
+`scripts/test_check.py` builds a minimal passing plugin in a `tempfile.TemporaryDirectory()` through a helper `make_plugin(root, **overrides)` that writes `VERSION`, both manifests, `.mcp.json`, `README.md` (50 prose words plus a code block, "What you can ask" with the four lines from Task 4), `LICENSE`, a sample PNG under assets (any bytes; images are not size-checked), and one skill `skills/shoot-products/SKILL.md` with valid front matter. Tests, each mutating one thing:
 
 ```python
 def test_a_complete_plugin_has_no_problems(self): assert run(root) == []
@@ -378,7 +378,7 @@ git commit -m "docs: listing copy for both directories"
 
 - [ ] **Step 1: Write the failing ZIP test**
 
-`scripts/test_build_zip.sh`: copies the repository to a temp dir with `git archive`, plants `.DS_Store` at the root and a stale `dist/old.zip` (Review Focus 4), runs `build-openai-zip.sh` there, then asserts with `unzip -Z1` on each archive: `dist/shootika-0.2.0-openai.zip` contains `.codex-plugin/plugin.json` and not `.claude-plugin/`; `dist/shootika-0.2.0-claude.zip` contains `.claude-plugin/plugin.json` and not `.codex-plugin/`; both contain `.mcp.json`, `README.md`, `LICENSE`, `assets/icon.png` and every `skills/*/SKILL.md`; neither contains a path starting with `.git`, `.github`, `.claude/`, `docs/`, `listing/`, `scripts/`, `dist/`, nor any `.DS_Store`; `dist/old.zip` is gone. Exits 1 on any failure with the offending path.
+`scripts/test_build_zip.sh`: copies the repository to a temp dir with `git archive`, plants `.DS_Store` at the root and a stale `dist/old.zip` (Review Focus 4), runs `build-openai-zip.sh` there, then asserts with `unzip -Z1` on each archive: `dist/shootika-0.2.0-openai.zip` contains `.codex-plugin/plugin.json` and not `.claude-plugin/`; `dist/shootika-0.2.0-claude.zip` contains `.claude-plugin/plugin.json` and not `.codex-plugin/`; both contain `.mcp.json`, `README.md`, `LICENSE`, the icon under assets and every `skills/*/SKILL.md`; neither contains a path starting with `.git`, `.github`, `.claude/`, `docs/`, `listing/`, `scripts/`, `dist/`, nor any `.DS_Store`; `dist/old.zip` is gone. Exits 1 on any failure with the offending path.
 
 - [ ] **Step 2: Run it to verify it fails**
 

@@ -1,63 +1,70 @@
 ---
 name: shoot-products
-description: Creates on-model product photos for a store with Shootika. Use when someone asks to shoot, photograph or create model photos for their products, find products that have no model photos, check on shoots, or publish (approve) frames to their store. Needs the Shootika connector.
+description: Shoot a store's products on AI models with Shootika and get frames back. Use when someone asks to shoot, photograph or make on-model photos of their products, to find products that have no model photos yet, or to check on a shoot that is running. Needs the Shootika connector. Not for publishing or removing frames (review-frames), choosing a model, pose or style (cast-models), or connection and permission problems (connect).
 ---
 
 # Shoot products with Shootika
 
-Shootika puts a store's garments on AI models and returns the result as a
-frame. This skill walks through one round: find the products, choose a scene,
-start the shoots, show the frames, and publish only the frames the person
-picks.
+A shoot puts one product photo on one scene's model and returns one frame.
+Every shoot uses one frame from the store's plan, whether or not the person
+keeps the result. This skill takes one round from "which products" to "the
+frames are ready"; `review-frames` takes over from there.
 
-## Rules that always apply
+## Before spending anything
 
-- **A shoot costs one frame from the store's plan.** Call `get_account` first
-  and say how many frames are left. Never start shoots the person did not ask
-  for, and confirm the count before starting more than one.
-- **Pass a `request_id` to every `start_shoot`** (for example the product id
-  plus the scene id). Repeating a call with the same `request_id` within 24
-  hours returns the first result instead of charging a second shoot.
-- **Publishing is the person's call.** Show each frame and wait for a clear yes
-  before `approve_frame`. On Shopify stores approving puts the frame on the
-  live product page, where shoppers see it. Ask before `remove_frame` too.
-- If a tool says the connection is missing a permission, tell the person which
-  one and that they can reconnect Shootika to grant it. Do not retry.
+- Call `get_account` first and tell the person how many frames are left.
+- Never start a shoot the person did not ask for. When they ask for several,
+  say how many frames that uses and confirm the count before starting more
+  than one.
+- If a shoot is refused because the plan's frames are used up, the message
+  says what the person can do. `references/messages.md` lists those messages
+  and what to tell them. Do not retry.
 
-## The round
+## Find the products
 
-1. **Check the account.** `get_account` gives the store, its plan and the
-   frames left this month.
-2. **Find the products.** `list_products` (24 per page; follow `page` while
-   more exist). To find products without model photos, compare against
-   `list_shoots` filtered by `product_id`, or ask the person which ones.
-   - Web app stores can add a missing product with `add_product`, or a photo
-     with `add_product_image`, from public image URLs.
-   - Shopify stores cannot: their products come from Shopify, so the person
-     adds them there.
-3. **Choose a scene.** A scene is a model in a style and pose.
-   - `list_scenes` with `status` ready shows what the store already has.
-   - For something new, `list_models` and `list_styles`, then
-     `request_scene`. It is free and safe to repeat. Wait until
-     `list_scenes` shows it ready.
-   - Offer the person two or three options rather than picking silently.
-4. **Pick the photo.** `get_product` lists a product's photos; its id is the
-   `source_image_id`. Use the one that shows the whole garment most clearly,
-   or ask. If someone is wearing the garment in it, pass
-   `garment_photo_type` `model`; the default is `flat-lay`.
-5. **Start the shoots** with `start_shoot`, one per product and scene, each
-   with its own `request_id`. They return at once with the frame queued.
-6. **Wait for results** with `get_shoot`. It waits a few seconds; call it again
-   with the same id while the frame is queued or processing. A failed frame
-   says why, and its frame was refunded.
-7. **Show the frames.** Give the person each preview and its full-size link,
-   and ask which to publish.
-8. **Publish** the chosen frames with `approve_frame`, then confirm what was
-   published and how many frames remain.
+- `list_products` lists the catalog newest first, 24 per page. Follow `page`
+  while more exist. Each product carries its id, title, garment category and
+  photos.
+- A product has no model photos when `list_shoots` filtered by its
+  `product_id` returns nothing. For a large catalog, ask the person which
+  products they mean rather than paging through everything.
+- Web app stores can add a missing product with `add_product`, or a photo with
+  `add_product_image`, from public image URLs. Shopify stores cannot: their
+  products come from Shopify. `references/store-types.md` has the two cases.
 
-## Good to know
+## Pick the photo and the scene
 
-- `list_shoots` filtered by `approved` shows what is already live.
-- A removed frame is kept and can be approved again until it expires.
-- To shoot a frame again, pass its id as `regenerate_of` to `start_shoot`. That
-  is a new shoot and costs a frame.
+- `get_product` lists a product's photos. The photo's id is the
+  `source_image_id`. Use the one that shows the whole garment most clearly, or
+  ask when two are close. Flat-lay photos work best.
+- If someone is wearing the garment in the photo, pass `garment_photo_type`
+  `model`. The default, `flat-lay`, is for the garment alone.
+- A shoot needs a scene whose status is `ready` in `list_scenes`. If the store
+  has one that fits, use it. For a new model, style or pose, or to offer the
+  person options, use `cast-models`, then come back with the scene id.
+
+## Start and wait
+
+- `start_shoot` once per product and scene, each call with its own
+  `request_id`, for example the product id and the scene id joined. A repeated
+  call with the same `request_id` within 24 hours returns the first result
+  instead of starting and charging a second shoot, so a retry after a network
+  error is safe.
+- `start_shoot` returns at once with the frame queued. `get_shoot` waits a few
+  seconds and returns the frame; call it again with the same id while the
+  status is `queued` or `processing`. Do not narrate each poll.
+- A failed frame says why, and its frame was refunded. Tell the person and
+  offer to try again with another photo or scene.
+
+## Then
+
+Hand the ready frames to `review-frames`: each preview, its full-size link,
+and the question of which to publish. Finish by saying how many frames remain
+on the plan.
+
+## If a tool refuses
+
+A tool that answers that the connection is not allowed to use it names the
+permission it needs. Tell the person which permission and that they can
+connect Shootika again to grant it; `connect` explains how. Do not retry the
+call. `references/messages.md` has every refusal and what each means.

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Review frames"
+  short_description: "Publish the frames you like"
+  default_prompt: "Use $review-frames to show me today's frames and publish the ones I pick."

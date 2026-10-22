@@ -1,0 +1,4 @@
+interface:
+  display_name: "Shoot products"
+  short_description: "On-model photos from your flat-lays"
+  default_prompt: "Use $shoot-products to shoot my newest product on a model and show me the frames."

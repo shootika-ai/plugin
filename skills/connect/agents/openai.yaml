@@ -1,0 +1,4 @@
+interface:
+  display_name: "Connect Shootika"
+  short_description: "Approve the connection, pick permissions"
+  default_prompt: "Use $connect to explain what Shootika may do with my store."

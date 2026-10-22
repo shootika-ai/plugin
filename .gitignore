@@ -1,3 +1,5 @@
 .DS_Store
 Thumbs.db
 __MACOSX/
+dist/
+__pycache__/

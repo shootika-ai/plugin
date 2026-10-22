@@ -38,8 +38,8 @@ Shopify store installs the app first, then connects.
 | Shoot | Request scenes and start shoots, which use frames from the plan |
 | Publish | Approve frames onto products, and take them back off |
 
-Read is always included. The others start unticked, so the person ticks the
-ones they want. In the web app, a team member whose role cannot edit products
+Read is always included. The others start unticked unless Shootika has
+verified the assistant, so the person ticks or unticks the ones they want. In the web app, a team member whose role cannot edit products
 (a viewer or a billing user) can grant Read only.
 
 ## Extra frames

@@ -50,7 +50,7 @@ name e-commerce, design or marketing. Record the final choice here.
 
 **Support contact:** `support@shootika.com`
 
-**Icon:** `assets/icon.png` from this repository (512 px PNG).
+**Icon:** the 512 px PNG under assets in this repository.
 
 **URL slug:** `shootika`. Permanent once published.
 
@@ -91,7 +91,8 @@ See `reviewer-account.md` for what the test store contains and where its
 credentials live. The access instructions to paste: sign in at
 `https://panel.shootika.com/login` with the email and password provided; the
 store has products with photos, ready scenes, and frames, and enough credits
-for the review. Every tool has been run from Claude as a custom connector.
+for the review. Before submitting, run every tool from Claude as a custom
+connector against that store and record the date here: `[not yet run]`.
 
 ## 9. Compliance
 

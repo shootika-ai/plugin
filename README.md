@@ -85,9 +85,12 @@ codex plugin add shootika@shootika
 The plugin runs no code on your computer. It is one remote MCP server
 reference and four skills written in plain text.
 
-- Your assistant connects only to `https://mcp.shootika.com`, over HTTPS,
-  after you approve the connection. It authenticates with an OAuth token
-  issued when you approve, which stops working as soon as you disconnect.
+- Your assistant talks to three Shootika addresses, all over HTTPS: the tools
+  at `https://mcp.shootika.com`; sign-in and tokens at
+  `https://api.shootika.com`; and, in your own browser, the approval page at
+  `https://panel.shootika.com` or inside your Shopify admin. It authenticates
+  with an OAuth token issued when you approve, which stops working as soon as
+  you disconnect.
 - With the Read permission, the assistant reads your Shootika account, your
   products and their photos, the model, style and scene library, and your
   shoots and frames. With Catalog it adds products and photos; with Shoot it

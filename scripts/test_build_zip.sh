@@ -37,7 +37,8 @@ if [ "$fail" -eq 0 ]; then
   contains "$claude" ".claude-plugin/plugin.json"
   lacks_prefix "$claude" ".codex-plugin/"
   for z in "$openai" "$claude"; do
-    for f in .mcp.json README.md LICENSE assets/icon.png; do contains "$z" "$f"; done
+    for f in .mcp.json README.md LICENSE; do contains "$z" "$f"; done
+    grep -q "^assets/.*\.png$" "$(listing "$z")" || problem "$z lacks the icon under assets/"
     for s in "$tmp"/skills/*/; do contains "$z" "skills/$(basename "$s")/SKILL.md"; done
     for p in .git .github .claude/ docs/ listing/ scripts/ dist/; do lacks_prefix "$z" "$p"; done
     lacks_name "$z" ".DS_Store"

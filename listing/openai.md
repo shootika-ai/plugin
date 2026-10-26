@@ -25,23 +25,24 @@ listing fields, starter prompts and the eight review test cases are read from
 
 | Tool | readOnly | destructive | openWorld | Justification |
 |---|---|---|---|---|
-| `get_account` | true | not set | false | Returns the store, plan and frames left; changes nothing. |
-| `list_products` | true | not set | false | Lists the store's own products; changes nothing. |
-| `get_product` | true | not set | false | Returns one product and its photos; changes nothing. |
-| `list_models` | true | not set | false | Lists the model library; changes nothing. |
-| `list_styles` | true | not set | false | Lists the style library; changes nothing. |
-| `list_scenes` | true | not set | false | Lists the store's scenes; changes nothing. |
-| `list_shoots` | true | not set | false | Lists the store's frames; changes nothing. |
-| `get_shoot` | true | not set | false | Returns one frame, waiting briefly for it to finish; changes nothing. |
-| `add_product` | false | false | false | Adds a product to the store's own catalog in Shootika; nothing is deleted or overwritten. |
-| `add_product_image` | false | false | false | Adds a photo to a product; nothing is deleted or overwritten. |
+| `get_account` | true | false | false | Returns the store, plan and frames left; changes nothing. |
+| `list_products` | true | false | false | Lists the store's own products; changes nothing. |
+| `get_product` | true | false | false | Returns one product and its photos; changes nothing. |
+| `list_models` | true | false | false | Lists the model library; changes nothing. |
+| `list_styles` | true | false | false | Lists the style library; changes nothing. |
+| `list_scenes` | true | false | false | Lists the store's scenes; changes nothing. |
+| `list_shoots` | true | false | false | Lists the store's frames; changes nothing. |
+| `get_shoot` | true | false | false | Returns one frame, waiting briefly for it to finish; changes nothing. |
+| `add_product` | false | false | true | Adds a product to the store's own catalog in Shootika; nothing is deleted or overwritten. Open world: it fetches photos from public image URLs the person gives. |
+| `add_product_image` | false | false | true | Adds a photo to a product; nothing is deleted or overwritten. Open world: it fetches the photo from a public image URL. |
 | `request_scene` | false | false | false | Asks Shootika to prepare a scene; free, idempotent, nothing deleted. |
 | `start_shoot` | false | true | false | Spends one frame from the merchant's paid plan, which cannot be undone; the description tells the assistant to ask first. |
-| `approve_frame` | false | true | false | Changes the live product page on Shopify stores, where shoppers see it; the description tells the assistant to show the frame and ask first. |
-| `remove_frame` | false | true | false | Removes a photo from the live product page on Shopify stores; the description tells the assistant to ask first. |
+| `approve_frame` | false | true | true | Changes the live product page on Shopify stores, where shoppers see it; the description tells the assistant to show the frame and ask first. Open world: it writes to the merchant's Shopify store. |
+| `remove_frame` | false | true | true | Removes a photo from the live product page on Shopify stores; the description tells the assistant to ask first. Open world: it writes to the merchant's Shopify store. |
 
-Every tool talks only to Shootika's own systems, so `openWorldHint` is false
-throughout.
+Every tool sets all three hints explicitly. `openWorldHint` is true on the four
+tools that reach a system Shootika does not control (a public image URL, or the
+merchant's Shopify store) and false on the rest, which touch only Shootika.
 
 ## Frame domains
 

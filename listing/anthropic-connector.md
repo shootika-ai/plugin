@@ -10,7 +10,7 @@ Server URL: `https://mcp.shootika.com`. One URL for every user.
 ## 2. Tools
 
 Synced from the server. Every tool has a `title`, `readOnlyHint`,
-`openWorldHint` and, on write tools, `destructiveHint` and `idempotentHint`.
+`destructiveHint` and `openWorldHint` and, on write tools, `idempotentHint`.
 Nothing to enter.
 
 ## 3. Listing

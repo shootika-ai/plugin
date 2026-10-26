@@ -1,5 +1,7 @@
 # Shootika for AI assistants
 
+[![Shootika MCP connector – tool definition quality and endpoint health on Glama](https://glama.ai/mcp/connectors/com.shootika/shootika/badges/score.svg)](https://glama.ai/mcp/connectors/com.shootika/shootika)
+
 [Shootika](https://shootika.com) turns the flat-lay photos a clothing store
 already has into on-model product photos, for a Shopify store or any other
 online store. This plugin connects Shootika to your AI assistant, so you can

@@ -4,14 +4,15 @@
 set -euo pipefail
 
 repo="$(cd "$(dirname "$0")/.." && pwd)"
-version="$(tr -d '[:space:]' < "$repo/VERSION")"
+version="$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1]))["version"])' "$repo/shootika/.claude-plugin/plugin.json")"
 tmp="$(mktemp -d)"
 trap 'rm -rf "$tmp"' EXIT
 
 git -C "$repo" archive HEAD | tar -x -C "$tmp"
 cp "$repo/scripts/build-openai-zip.sh" "$tmp/scripts/build-openai-zip.sh" 2>/dev/null || true
 printf '\0' > "$tmp/.DS_Store"
-printf '\0' > "$tmp/skills/.DS_Store"
+printf '\0' > "$tmp/shootika/.DS_Store"
+printf '\0' > "$tmp/shootika/skills/.DS_Store"
 mkdir -p "$tmp/dist" && printf 'stale' > "$tmp/dist/old.zip"
 
 (cd "$tmp" && bash scripts/build-openai-zip.sh > /dev/null)
@@ -39,8 +40,8 @@ if [ "$fail" -eq 0 ]; then
   for z in "$openai" "$claude"; do
     for f in .mcp.json README.md LICENSE; do contains "$z" "$f"; done
     grep -q "^assets/.*\.png$" "$(listing "$z")" || problem "$z lacks the icon under assets/"
-    for s in "$tmp"/skills/*/; do contains "$z" "skills/$(basename "$s")/SKILL.md"; done
-    for p in .git .github .claude/ docs/ listing/ scripts/ dist/; do lacks_prefix "$z" "$p"; done
+    for s in "$tmp"/shootika/skills/*/; do contains "$z" "skills/$(basename "$s")/SKILL.md"; done
+    for p in .git .github .claude/ docs/ listing/ scripts/ dist/ shootika/; do lacks_prefix "$z" "$p"; done
     lacks_name "$z" ".DS_Store"
   done
 fi

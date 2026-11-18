@@ -22,6 +22,7 @@ jobs:
         run: |
           claude --version
           claude plugin validate --strict .
+          claude plugin validate --strict shootika
 
       - uses: actions/setup-python@v5
         with:

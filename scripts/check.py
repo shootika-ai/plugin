@@ -2,8 +2,9 @@
 """The directory rules this plugin must keep: Anthropic's plugin directory and OpenAI's plugin
 directory.
 
-Run from the repository root: `python3 scripts/check.py`. Prints one problem per line and exits 1
-when there are any. No dependencies beyond the standard library, so CI and a laptop run the same
+The plugin is the `shootika/` folder; the repository root holds only the marketplace and this tooling,
+because the Claude directory refuses scripts inside a plugin from an organization that is not Verified.
+Run from anywhere: `python3 scripts/check.py`. Prints one problem per line and exits 1 when there are any. No dependencies beyond the standard library, so CI and a laptop run the same
 thing. `claude plugin validate --strict` covers what this does not: manifest schema and paths.
 """
 import json
@@ -68,13 +69,12 @@ def _ask_lines(readme: str) -> list[str]:
 # ---- Rule families
 
 def check_versions(root: Path) -> list[str]:
-    version = (root / 'VERSION').read_text().strip()
-    problems = []
-    for manifest in ('.claude-plugin/plugin.json', '.codex-plugin/plugin.json'):
-        found = _read_json(root / manifest).get('version')
-        if found != version:
-            problems.append(f'{manifest}: version {found!r} does not match VERSION {version!r}')
-    return problems
+    """The Claude manifest's version is the release; the Codex manifest must carry the same one."""
+    version = _read_json(root / '.claude-plugin/plugin.json').get('version')
+    found = _read_json(root / '.codex-plugin/plugin.json').get('version')
+    if found != version:
+        return [f'.codex-plugin/plugin.json: version {found!r} does not match .claude-plugin/plugin.json {version!r}']
+    return []
 
 
 def check_openai_interface(root: Path, readme: str) -> list[str]:
@@ -244,8 +244,38 @@ def run(root: Path) -> list[str]:
     return problems
 
 
-def main() -> int:
-    problems = run(Path.cwd())
+PLUGIN_DIR = 'shootika'
+# What the Claude directory accepts from an organization that is not Verified: anything else in the
+# plugin folder refuses the whole version (LOCAL_CODE_FILE_TYPE).
+ALLOWED_SUFFIXES = {'.md', '.txt', '.json', '.yaml', '.yml', '.png', '.jpg', '.jpeg', '.gif', '.webp', '.ico'}
+ALLOWED_NAMES = {'LICENSE', '.gitignore'}
+
+
+def check_allowed_files(root: Path) -> list[str]:
+    problems = []
+    for path in sorted(p for p in root.rglob('*') if p.is_file()):
+        rel = path.relative_to(root).as_posix()
+        if any(part in SKIP_DIRS for part in path.relative_to(root).parts) or path.name in STRAY_NAMES:
+            continue
+        if path.suffix.lower() not in ALLOWED_SUFFIXES and path.name not in ALLOWED_NAMES:
+            problems.append(f'{rel}: not a file type the directory accepts in a plugin (Markdown, text, JSON, '
+                            f'YAML or an image); keep it outside {PLUGIN_DIR}/')
+        elif path.read_bytes()[:2] == b'#!':
+            problems.append(f'{rel}: starts with #!, which the directory refuses in a plugin')
+    return problems
+
+
+def check_marketplace(repo: Path) -> list[str]:
+    sources = [p.get('source') for p in _read_json(repo / '.claude-plugin/marketplace.json').get('plugins', [])]
+    if sources != [f'./{PLUGIN_DIR}']:
+        return [f'.claude-plugin/marketplace.json: plugins should be the one source ./{PLUGIN_DIR}, found {sources}']
+    return []
+
+
+def main(repo: Path | None = None) -> int:
+    repo = Path(repo) if repo else Path(__file__).resolve().parent.parent
+    plugin = repo / PLUGIN_DIR
+    problems = [f'{PLUGIN_DIR}/{p}' for p in run(plugin) + check_allowed_files(plugin)] + check_marketplace(repo)
     for problem in problems:
         print(problem)
     return 1 if problems else 0

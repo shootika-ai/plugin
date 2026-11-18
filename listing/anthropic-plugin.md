@@ -7,17 +7,19 @@ organization, so the two listings can be paired.
 ## Source
 
 - **Repository:** `shootika-ai/plugin`
-- **Plugin path:** empty (the plugin is at the repository root)
+- **Plugin path:** `shootika` (the repository root holds the marketplace,
+  the scripts and these notes; the directory refuses scripts inside a plugin
+  from an organization that is not Verified, so the plugin has its own folder)
 - **Tracked branch:** `main`
 - **How new versions reach the directory:** GitHub push webhook. Set it up
   after submitting; it needs admin access to the repository.
 
-Run `claude plugin validate --strict .` and `python3 scripts/check.py` before
+Run `claude plugin validate --strict shootika` and `python3 scripts/check.py` before
 pressing Validate in the portal. Both must be clean.
 
 ## Listing details
 
-Read from `.claude-plugin/plugin.json` and `README.md`. Nothing to type; change
+Read from `shootika/.claude-plugin/plugin.json` and `shootika/README.md`. Nothing to type; change
 the files and validate again if something reads wrong.
 
 ## Data handling
@@ -42,7 +44,7 @@ either way.
 
 ## After listing
 
-A release is: edit, bump `VERSION` and both manifests, merge to `main`. The
+A release is: edit, bump `version` in both manifests, merge to `main`. The
 webhook triggers a scan; the version publishes under whichever setting the
 reviewer applied.
 

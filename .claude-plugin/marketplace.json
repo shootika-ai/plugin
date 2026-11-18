@@ -10,7 +10,7 @@
   "plugins": [
     {
       "name": "shootika",
-      "source": "./",
+      "source": "./shootika",
       "description": "Shoot on-model product photos for your store from your AI assistant: find products without model photos, start shoots, review the frames and publish the ones you approve. Works with a Shopify store or any other online store."
     }
   ]

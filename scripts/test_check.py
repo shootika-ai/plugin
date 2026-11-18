@@ -66,7 +66,6 @@ def make_plugin(root: Path, *, claude=None, codex=None, readme_text=None, skill=
     (root / '.codex-plugin' / 'plugin.json').write_text(json.dumps(codex or codex_manifest()))
     (root / '.mcp.json').write_text(json.dumps(mcp or {'mcpServers': {'shootika': {
         'type': 'http', 'url': 'https://mcp.shootika.com'}}}))
-    (root / 'VERSION').write_text(VERSION + '\n')
     (root / 'README.md').write_text(readme() if readme_text is None else readme_text)
     (root / 'LICENSE').write_text('MIT\n')
     (root / 'assets').mkdir()
@@ -97,6 +96,24 @@ class CheckTests(unittest.TestCase):
 
     def test_a_complete_plugin_has_no_problems(self):
         self.assertEqual(self.problems(), [])
+
+    def test_a_complete_plugin_has_only_allowed_files(self):
+        self.assertEqual(check.check_allowed_files(self.plugin()), [])
+
+    def test_a_script_in_the_plugin_is_reported(self):
+        root = self.plugin()
+        (root / 'tool.py').write_text('print(1)\n')
+        self.assert_reported(check.check_allowed_files(root), 'tool.py', 'file type')
+
+    def test_a_shebang_in_an_allowed_file_is_reported(self):
+        root = self.plugin()
+        (root / 'run.md').write_text('#!/bin/sh\necho hi\n')
+        self.assert_reported(check.check_allowed_files(root), 'run.md', '#!')
+
+    def test_the_marketplace_points_at_the_plugin_folder(self):
+        (self.root / '.claude-plugin').mkdir()
+        (self.root / '.claude-plugin' / 'marketplace.json').write_text(json.dumps({'plugins': [{'source': './'}]}))
+        self.assert_reported(check.check_marketplace(self.root), './shootika')
 
     def test_version_mismatch_is_reported(self):
         self.assert_reported(self.problems(claude=claude_manifest(version='0.1.9')), 'version', '0.1.9')
@@ -225,15 +242,15 @@ class CheckTests(unittest.TestCase):
                              '.mcp.json')
 
     def test_main_returns_1_with_problems_and_0_without(self):
-        root = self.plugin()
-        cwd = os.getcwd()
-        try:
-            os.chdir(root)
-            self.assertEqual(check.main(), 0)
-            (root / 'skills' / '.DS_Store').write_bytes(b'\0')
-            self.assertEqual(check.main(), 1)
-        finally:
-            os.chdir(cwd)
+        plugin = self.root / 'shootika'
+        plugin.mkdir()
+        make_plugin(plugin)
+        (self.root / '.claude-plugin').mkdir()
+        (self.root / '.claude-plugin' / 'marketplace.json').write_text(
+            json.dumps({'plugins': [{'source': './shootika'}]}))
+        self.assertEqual(check.main(self.root), 0)
+        (plugin / 'skills' / '.DS_Store').write_bytes(b'\0')
+        self.assertEqual(check.main(self.root), 1)
 
 
 if __name__ == '__main__':

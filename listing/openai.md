@@ -1,9 +1,9 @@
 # OpenAI directory: the With MCP submission
 
 The answers for platform.openai.com/plugins. The ZIP is
-`dist/shootika-<VERSION>-openai.zip` from `scripts/build-openai-zip.sh`. The
+`dist/shootika-<version>-openai.zip` from `scripts/build-openai-zip.sh`. The
 listing fields, starter prompts and the eight review test cases are read from
-`.codex-plugin/plugin.json`; edit the manifest, not the form.
+`shootika/.codex-plugin/plugin.json`; edit the manifest, not the form.
 
 ## Prerequisites outside this repository
 

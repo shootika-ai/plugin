@@ -25,7 +25,7 @@ listing fields, starter prompts and the eight review test cases are read from
 
 | Tool | readOnly | destructive | openWorld | Justification |
 |---|---|---|---|---|
-| `get_account` | true | false | false | Returns the store, plan and frames left; changes nothing. |
+| `get_account` | true | false | false | Returns the connected store and the frames it has available; changes nothing. |
 | `list_products` | true | false | false | Lists the store's own products; changes nothing. |
 | `get_product` | true | false | false | Returns one product and its photos; changes nothing. |
 | `list_models` | true | false | false | Lists the model library; changes nothing. |
@@ -36,7 +36,7 @@ listing fields, starter prompts and the eight review test cases are read from
 | `add_product` | false | false | true | Adds a product to the store's own catalog in Shootika; nothing is deleted or overwritten. Open world: it fetches photos from public image URLs the person gives. |
 | `add_product_image` | false | false | true | Adds a photo to a product; nothing is deleted or overwritten. Open world: it fetches the photo from a public image URL. |
 | `request_scene` | false | false | false | Asks Shootika to prepare a scene; free, idempotent, nothing deleted. |
-| `start_shoot` | false | true | false | Spends one frame from the merchant's paid plan, which cannot be undone; the description tells the assistant to ask first. |
+| `start_shoot` | false | true | false | Uses one frame of the allowance already included in the merchant's Shootika account, which cannot be undone; the description tells the assistant to ask first. |
 | `approve_frame` | false | true | true | Changes the live product page on Shopify stores, where shoppers see it; the description tells the assistant to show the frame and ask first. Open world: it writes to the merchant's Shopify store. |
 | `remove_frame` | false | true | true | Removes a photo from the live product page on Shopify stores; the description tells the assistant to ask first. Open world: it writes to the merchant's Shopify store. |
 

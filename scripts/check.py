@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """The directory rules this plugin must keep: Anthropic's plugin directory and OpenAI's plugin
-directory, as encoded in docs/superpowers/specs/2026-10-22-directory-listing-design.md.
+directory.
 
 Run from the repository root: `python3 scripts/check.py`. Prints one problem per line and exits 1
 when there are any. No dependencies beyond the standard library, so CI and a laptop run the same

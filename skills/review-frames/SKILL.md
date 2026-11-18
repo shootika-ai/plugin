@@ -37,7 +37,7 @@ shoppers. This skill shows frames and acts only on a clear yes.
 ## Shoot again
 
 - To redo a frame, call `start_shoot` with `regenerate_of` set to that frame's
-  id. That is a new shoot and uses a frame from the plan, so check
+  id. That is a new shoot and uses another frame, so check
   `get_account` and confirm first, as `shoot-products` does.
 - For a different model, style or pose, use `cast-models` to prepare the
   scene, then shoot.

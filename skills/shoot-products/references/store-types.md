@@ -27,5 +27,5 @@
 - **Approving a frame** saves it to the product in Shootika. Nothing is
   published anywhere else.
 - **Connected assistants** are under Settings, Connected assistants in the web
-  app. Only an admin can disconnect one or allow extra frames; other team
+  app. Only an admin can disconnect one; other team
   members see the list.

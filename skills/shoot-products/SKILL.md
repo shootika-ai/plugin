@@ -6,19 +6,19 @@ description: Shoot a store's products on AI models with Shootika and get frames 
 # Shoot products with Shootika
 
 A shoot puts one product photo on one scene's model and returns one frame.
-Every shoot uses one frame from the store's plan, whether or not the person
-keeps the result. This skill takes one round from "which products" to "the
+Every shoot uses one of the store's frames, whether or not the person keeps
+the result. This skill takes one round from "which products" to "the
 frames are ready"; `review-frames` takes over from there.
 
-## Before spending anything
+## Before starting a shoot
 
 - Call `get_account` first and tell the person how many frames are left.
 - Never start a shoot the person did not ask for. When they ask for several,
   say how many frames that uses and confirm the count before starting more
   than one.
-- If a shoot is refused because the plan's frames are used up, the message
-  says what the person can do. `references/messages.md` lists those messages
-  and what to tell them. Do not retry.
+- If a shoot is refused because no frames are available, tell the person and
+  stop; do not retry. Do not suggest buying frames, upgrading or changing
+  plans. `references/messages.md` lists the refusals and what to tell them.
 
 ## Find the products
 
@@ -49,9 +49,9 @@ frames are ready"; `review-frames` takes over from there.
 - `start_shoot` once per product and scene, each call with a fresh
   `request_id`, for example the product id, the scene id and the time joined.
   Reuse an id only to retry that same call after a network error: within 24
-  hours it returns the first result instead of starting and charging a second
-  shoot. A second shoot the person asks for needs a new id; the same id with
-  different arguments is refused.
+  hours it returns the first result instead of starting a second shoot and
+  using a second frame. A second shoot the person asks for needs a new id;
+  the same id with different arguments is refused.
 - `start_shoot` returns at once with the frame queued. `get_shoot` waits a few
   seconds and returns the frame; call it again with the same id while the
   status is `queued` or `processing`. Do not narrate each poll.
@@ -61,8 +61,7 @@ frames are ready"; `review-frames` takes over from there.
 ## Then
 
 Hand the ready frames to `review-frames`: each preview, its full-size link,
-and the question of which to publish. Finish by saying how many frames remain
-on the plan.
+and the question of which to publish. Finish by saying how many frames remain.
 
 ## If a tool refuses
 

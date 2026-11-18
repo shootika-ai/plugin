@@ -24,7 +24,7 @@
     "defaultPrompt": [
       "Which of my products have no model photos yet?",
       "Shoot my newest product on a model and show me the frames.",
-      "How many frames do I have left this month?"
+      "Show me the frames from today and publish the second one."
     ],
     "websiteURL": "https://shootika.com",
     "supportURL": "https://shootika.com/contact/",
@@ -41,10 +41,10 @@
         "test_cases": {
           "positive": [
             {
-              "description": "Check the plan and the frames left before doing anything that costs.",
-              "prompt": "How many Shootika frames does my store have left this month?",
+              "description": "See which store is connected and what it has available before starting anything.",
+              "prompt": "Which store is Shootika connected to, and how many frames does it have available?",
               "tools_triggered": "get_account",
-              "expected_behavior": "Calls get_account and states the store name, its plan, and the frames left this month. Starts no shoot."
+              "expected_behavior": "Calls get_account and states the store name and the frames it has available. Starts no shoot."
             },
             {
               "description": "Browse the catalog that shoots start from.",

@@ -31,8 +31,8 @@ It works for a Shopify store, where an approved frame goes straight onto the
 live product page, and for any other online store through the Shootika web
 app, where approved frames are saved to the product for you to download.
 
-Every shoot uses one frame from your Shootika plan. The assistant checks how
-many you have left and asks before spending. Nothing is published until you
+Every shoot uses one frame. The assistant checks how many your store has
+available and asks before starting one. Nothing is published until you
 say so. Shootika only adds and removes its own frames: it cannot change
 prices or other product details, and it has no customer or order data.
 
@@ -90,7 +90,7 @@ data and no sponsored content.
 See `reviewer-account.md` for what the test store contains and where its
 credentials live. The access instructions to paste: sign in at
 `https://panel.shootika.com/login` with the email and password provided; the
-store has products with photos, ready scenes, and frames, and enough credits
+store has products with photos, ready scenes, and frames, and enough frames
 for the review. Before submitting, run every tool from Claude as a custom
 connector against that store and record the date here: `[not yet run]`.
 

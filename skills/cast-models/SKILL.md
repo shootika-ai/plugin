@@ -41,7 +41,6 @@ and starts the shoot.
 
 ## What this skill does not claim
 
-How many of the store's own models a plan allows, and how long a scene takes
-beyond "a little while", are not stated here. Plans are on
-shootika.com/pricing, and the Studio in the Shootika app shows a scene's
-progress.
+How many of the store's own models an account allows, and how long a scene
+takes beyond "a little while", are not stated here. The Studio in the
+Shootika app shows a scene's progress.

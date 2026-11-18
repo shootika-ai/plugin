@@ -13,7 +13,6 @@ like, in the same conversation where you do the rest of your work.
 - "Which of my products have no model photos yet?"
 - "Shoot my newest product on a model and show me the frames."
 - "Show me the frames from today and publish the second one."
-- "How many frames do I have left this month?"
 
 The plugin adds four skills that walk the assistant through those jobs:
 `shoot-products` (find products, pick a photo and a scene, start shoots and
@@ -24,8 +23,8 @@ and how to change it).
 
 ## How it treats your store
 
-- **Every shoot uses one frame from your plan.** The assistant checks how many
-  you have left and asks before starting shoots you did not ask for.
+- **Every shoot uses one frame.** The assistant checks how many frames your
+  store has available and asks before starting shoots you did not ask for.
 - **Nothing is published until you say so.** The assistant shows you each
   frame and waits for a clear yes. On a Shopify store, an approved frame goes
   on the live product page, where shoppers see it. On a web app store it is
@@ -48,7 +47,7 @@ do:
 |---|---|
 | Read | See your account, products, models, styles, scenes and shoots |
 | Catalog | Add products and product photos (web app stores only) |
-| Shoot | Request scenes and start shoots, which use frames from your plan |
+| Shoot | Request scenes and start shoots, which use your store's frames |
 | Publish | Approve frames onto your products, and take them back off |
 
 You can see and disconnect every connected assistant, and disconnecting stops

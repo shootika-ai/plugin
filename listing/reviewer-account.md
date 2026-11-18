@@ -12,7 +12,7 @@ production web app store serves both.
   without waiting on `request_scene`.
 - A few finished frames, at least one approved, so `list_shoots` filtered by
   `approved` is not empty.
-- Goodwill credits granted by Shootika, enough for two reviews that run every
+- Goodwill frames granted by Shootika, enough for two reviews that run every
   tool several times, with an expiry about a year out. The amount and expiry
   are recorded below when granted. Re-grant before a scheduled review if the
   balance is low.

@@ -1,6 +1,6 @@
 ---
 name: connect
-description: Connect an AI assistant to a Shootika store, or fix a connection. Use when Shootika is not connected yet, a Shootika tool answers that the connection is missing a permission or is no longer valid, or someone asks what the assistant may do with their store, how to allow extra frames, or how to see and disconnect assistants. Explains the Shootika connect page and its four permissions; starts no shoot.
+description: Connect an AI assistant to a Shootika store, or fix a connection. Use when Shootika is not connected yet, a Shootika tool answers that the connection is missing a permission or is no longer valid, or someone asks what the assistant may do with their store, or how to see and disconnect assistants. Explains the Shootika connect page and its four permissions; starts no shoot.
 ---
 
 # Connect Shootika
@@ -35,21 +35,12 @@ Shopify store installs the app first, then connects.
 |---|---|
 | Read | See the account, products, models, styles, scenes and shoots |
 | Catalog | Add products and product photos (web app stores only) |
-| Shoot | Request scenes and start shoots, which use frames from the plan |
+| Shoot | Request scenes and start shoots, which use the store's frames |
 | Publish | Approve frames onto products, and take them back off |
 
 Read is always included. The others start unticked unless Shootika has
 verified the assistant, so the person ticks or unticks the ones they want. In the web app, a team member whose role cannot edit products
 (a viewer or a billing user) can grant Read only.
-
-## Extra frames
-
-The page may show "Allow extra frames past my plan (billed on monthly
-plans)". It starts off. Left off, the assistant cannot start shoots once the
-plan's frames are used up. Extra frames are billed on monthly plans, Shopify
-or web app; on a yearly plan or the Free plan they are never billed, and
-shoots stop when the frames run out. The switch can be changed later for each
-connection, where connections are managed.
 
 ## Fixing a connection
 
@@ -68,13 +59,11 @@ connection, where connections are managed.
 
 - **Web app stores:** Settings, Connected assistants. Each row shows who
   connected the assistant, what it can do and when it was last used. Admins
-  can disconnect it and, on a monthly plan, allow extra frames. Other members
-  see the list.
+  can disconnect it; other members see the list.
 - **Shopify stores:**
   `https://admin.shopify.com/store/<your-store>/apps/shootika/app/connections`,
   with the store's name in place of `<your-store>`. The page is not in the
-  Shootika app's menu. Each connection can be disconnected or allowed extra
-  frames there. Removing the Shootika app disconnects every assistant, and
+  Shootika app's menu. Each connection can be disconnected there. Removing the Shootika app disconnects every assistant, and
   reinstalling does not bring them back.
 
 Disconnecting stops the assistant at once.
